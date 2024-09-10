@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FacturaService {
@@ -19,14 +20,12 @@ public class FacturaService {
 	@Autowired
 	private UsuarioClient usuarioClient;
 
-	public Iterable<FacturaDTO> getFacturas() {
-		Iterable<Factura> facturas = facturaRepository.findAll();
-		Iterable<FacturaDTO> facturasDTO = null;
-		for (Factura factura : facturas) {
+	public List<FacturaDTO> getFacturas() {
+		List<Factura> facturas = facturaRepository.findAll();
+		List<FacturaDTO> facturasDTO = facturas.stream().map(factura -> {
 			UserDTO usuario = usuarioClient.getUsuario(factura.getIdUsuario());
-			FacturaDTO facturaDTO = new FacturaDTO(factura.getId(), factura.getTotal(), usuario);
-			facturasDTO = List.of(new FacturaDTO[] { facturaDTO });
-		}
+			return new FacturaDTO(factura.getId(), factura.getTotal(), usuario);
+		}).collect(Collectors.toList());
 		return facturasDTO;
 	}
 

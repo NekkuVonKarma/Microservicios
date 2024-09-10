@@ -1,6 +1,10 @@
 package es.neesis.facturaservice.dto;
 
+import es.neesis.facturaservice.model.Factura;
+
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class FacturaDTO {
 	private Integer id;

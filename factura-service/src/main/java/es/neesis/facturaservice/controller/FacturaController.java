@@ -7,13 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class FacturaController {
 	@Autowired
 	private FacturaService facturaService;
 
 	@GetMapping("/facturas")
-	public Iterable<FacturaDTO> obtenerFacturas() {
+	public List<FacturaDTO> obtenerFacturas() {
 		return facturaService.getFacturas();
 	}
 
