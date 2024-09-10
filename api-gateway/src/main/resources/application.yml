@@ -1,0 +1,28 @@
+server:
+  port: 8080  # Puerto del API Gateway
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: login-service
+          uri: lb://login-service
+          predicates:
+            - Path=/login/**
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/usuarios/**
+        - id: factura-service
+          uri: lb://factura-service
+          predicates:
+            - Path=/facturas/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
